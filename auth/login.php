@@ -1,5 +1,6 @@
 <?php
 
+
 include '../connection.php';
 
 //POST = send/save data to mysql db
@@ -10,26 +11,40 @@ $userEmail = $postData['email'];
 
 $userPassword = $postData['pass']; 
 
-$sqlQuery = "SELECT * FROM users WHERE email = '$userEmail' AND pass= '$userPassword'";
 
-$resultOfQuery = $connectNow->query($sqlQuery);
+if(strlen($userPassword)>5&&
+strpos($userEmail, "@") !== true
+){
 
-if($resultOfQuery->num_rows > 0) //allow user to login 
-
-{
-    $userRecord = array();
-    while($rowFound = $resultOfQuery->fetch_assoc())
-    {
-        $userRecord[] = $rowFound;
-    }
-    echo json_encode(
-        array(
-            "success"=>true,
-            "data"=>$userRecord[0],
-        )
-    );
+    $sqlQuery = "SELECT * FROM users WHERE email = '$userEmail'
+    AND pass= '$userPassword' ";
+   
+   $resultOfQuery = $connectNow->query($sqlQuery);
+   
+   if($resultOfQuery->num_rows > 0) //allow user to login 
+   
+   {
+       $userRecord = array();
+       while($rowFound = $resultOfQuery->fetch_assoc())
+       {
+           $userRecord[] = $rowFound;
+       }
+       echo json_encode(
+           array(
+               "success"=>true,
+               "data"=>$userRecord[0],
+           )
+       );
+   }
+   else //Do NOT allow user to login 
+   {
+       echo json_encode(array("success"=>false));
+   }
 }
-else //Do NOT allow user to login 
-{
-    echo json_encode(array("success"=>false));
+
+else{
+
+    echo json_encode(array("success"=>false,
+    "message"=>"wrong data email or password error")); 
+
 }

@@ -15,16 +15,13 @@ $price= $postData['price'];
 $userId= $postData['user_id'];
 $RoleId= $postData['role_id'];
 $type= $postData['type'];
-$phone= $postData['phone'];
-$cat= $postData['cat'];
-$whats= $postData['whats'];
 
 $sqlQuery ="INSERT INTO buildings SET name='$name',
-lat='$lat',lng='$lng',
-phone='$phone',whats='$whats',
-cat='$cat',
-location_name='$locationName',image='$image',price='$price',
-user_id='$userId',RoleId='$RoleId',type='$type'
+lat='$lat',
+lng='$lng'
+,location_name='$locationName',image='$image',price='$price'
+,user_id='$userId',RoleId='$RoleId',type='$type'
+
 ";
 //$sqlQuery = "SELECT * FROM buildings";
 

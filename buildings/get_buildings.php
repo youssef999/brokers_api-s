@@ -2,8 +2,7 @@
 
 
 <?php
-
-include '../connection.php';
+ include '../connection.php';
 
 $sqlQuery = "SELECT * FROM buildings";
 
@@ -13,7 +12,6 @@ if($resultOfQuery->num_rows > 0)
 
 {
     $clothItemRecored = array();
-    
     while($rowFound = $resultOfQuery->fetch_assoc())
     {
         $clothItemRecored[] = $rowFound;
@@ -22,10 +20,11 @@ if($resultOfQuery->num_rows > 0)
     echo json_encode(
         array(
             "success"=>true,
-            "Data"=>$clothItemRecored
+            "data"=>$clothItemRecored
         )
     );
 }
+
 else //Do NOT allow user to login 
 {
     echo json_encode(array("success"=>false));

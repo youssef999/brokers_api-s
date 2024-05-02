@@ -9,7 +9,6 @@ include'../connection.php';
 
 $postData = json_decode(file_get_contents('php://input'), true);
 
-
 $name = $postData['name'];
 
 $userId= $postData['userId'];

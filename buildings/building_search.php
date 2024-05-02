@@ -1,17 +1,24 @@
+
+
+
 <?php
 
 include '../connection.php';
 
 $postData = json_decode(file_get_contents('php://input'), true);
 
-$userId= $postData['user_id'];
+$cat = $postData['cat'];
+$type= $postData['type'];
+$price= $postData['price_limit'];
+$locationName= $postData['location_name'];
 
-
-$sqlQuery = "SELECT * FROM orders WHERE user_id='$userId' ";
+$sqlQuery = "SELECT * FROM buildings WHERE cat='$cat' 
+AND type='$type' AND price_limit='$price' AND location_name='$locationName'";
+//$sqlQuery = "SELECT * FROM buildings WHERE cat='$cat' AND type='$type'";
 
 $resultOfQuery = $connectNow->query($sqlQuery);
 
-if($resultOfQuery->num_rows > 0) 
+if($resultOfQuery->num_rows > 0)
 
 {
     $clothItemRecored = array();
@@ -20,15 +27,15 @@ if($resultOfQuery->num_rows > 0)
     {
         $clothItemRecored[] = $rowFound;
     }
-
     echo json_encode(
         array(
             "success"=>true,
-            "Data"=>$clothItemRecored
+            "data"=>$clothItemRecored
         )
     );
 }
-else //Do NOT allow user to login 
+
+else 
 {
     echo json_encode(array("success"=>false));
 }

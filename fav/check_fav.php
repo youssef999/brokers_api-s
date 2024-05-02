@@ -1,15 +1,17 @@
 <?php
 
-include '../connection.php';
-
+include "../connection.php";
 $postData = json_decode(file_get_contents('php://input'), true);
 
-$userId= $postData['user_id'];
+$user_id = $postData['user_id'];
+
+$buildingId = $postData['building_id'];
 
 
-$sqlQuery = "SELECT * FROM orders WHERE user_id='$userId' ";
+$sqlQuery ="SELECT * FROM fav WHERE building_id='$buildingId' 
+AND user_id='$user_id' ";
 
-$resultOfQuery = $connectNow->query($sqlQuery);
+$resultOfQuery= $connectNow->query($sqlQuery);
 
 if($resultOfQuery->num_rows > 0) 
 
@@ -33,5 +35,10 @@ else //Do NOT allow user to login
     echo json_encode(array("success"=>false));
 }
 
-
+// if($queryResult) {
+//       echo json_encode(array("success"=>true));
+// }
+// else{
+//     echo json_encode(array("success"=>false));
+// }
 

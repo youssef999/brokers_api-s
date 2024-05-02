@@ -1,16 +1,14 @@
 
-
-
-
-
 <?php
 
 include '../connection.php';
 
+$postData = json_decode(file_get_contents('php://input'), true);
 
-$cat = $_POST['cat'];
+$cat = $postData['cat'];
+$type= $postData['type'];
 
-$sqlQuery = "SELECT * FROM buildings WHERE cat='$cat' ";
+$sqlQuery = "SELECT * FROM buildings WHERE cat='$cat' AND type='$type'";
 
 $resultOfQuery = $connectNow->query($sqlQuery);
 
@@ -23,15 +21,14 @@ if($resultOfQuery->num_rows > 0)
     {
         $clothItemRecored[] = $rowFound;
     }
-    
     echo json_encode(
         array(
             "success"=>true,
-            "Data"=>$clothItemRecored
+            "data"=>$clothItemRecored
         )
     );
 }
-else //Do NOT allow user to login 
+else 
 {
     echo json_encode(array("success"=>false));
 }
